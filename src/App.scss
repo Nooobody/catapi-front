@@ -1,0 +1,25 @@
+
+$title-color: white;
+
+@import "../node_modules/bulma/sass/utilities/_all";
+@import "../node_modules/bulma/sass/base/_all";
+@import "../node_modules/bulma/sass/grid/columns";
+@import "../node_modules/bulma/sass/elements/title";
+
+$primary-color: #990AE3;
+
+.App {
+  background-color: $primary-color;
+  min-height: 100vh;
+  color: white;
+  padding-top: 20px;
+}
+
+.breed {
+  background-color: darken($primary-color, 5%);
+  margin: 10px;
+}
+
+.breed-content {
+  margin-left: 10px;
+}
