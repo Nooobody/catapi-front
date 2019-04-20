@@ -23,9 +23,11 @@ function* sagaFetchBreeds(action) {
     let resp = yield fetch(`http://${API_URL}/breed`);
     let breeds = yield resp.json();
     yield put(actions.s_fetchAllBreeds({breeds}));
+    yield put(appActions.clearError());
+    yield put(appActions.setLoading({loading: false}));
   }
   catch(e) {
-    yield put(appActions.fetchFailed({error: "Failed to fetch breeds"}));
+    yield put(appActions.fetchError({error: "Failed to fetch breeds"}));
 
     // Try again in 5 seconds...
     yield delay(1000 * 5);

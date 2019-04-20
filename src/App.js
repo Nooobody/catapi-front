@@ -5,6 +5,7 @@ import './App.scss';
 import BreedList from './components/BreedList';
 import SearchWrapper from './components/SearchWrapper';
 import Error from './components/Error';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { actions as appActions } from './redux/components/app';
 
@@ -17,17 +18,29 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title has-text-centered">Cat Breeds</h1>
+        <h1 className="title has-text-centered"><FontAwesomeIcon icon="cat" /> Cat Breeds</h1>
         <Error />
-        <SearchWrapper></SearchWrapper>
-        <BreedList />
+        { this.props.loading ?
+            <div className="has-text-centered">
+              <FontAwesomeIcon icon="cog" size="4x" spin />
+            </div>
+          :
+            <div>
+              <SearchWrapper></SearchWrapper>
+              <BreedList />
+            </div>
+        }
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.app.loading
+});
+
 const mapDispatchToProps = {
   init: appActions.init
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

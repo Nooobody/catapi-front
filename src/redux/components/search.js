@@ -18,9 +18,10 @@ function* sagaSearchBreeds(action) {
     let resp = yield fetch(`http://${API_URL}/breed/search/${action.payload.search}`)
     let searchResults = yield resp.json();
     yield put(actions.s_searchBreedsByName({searchResults}));
+    yield put(appActions.clearError());
   }
   catch(e) {
-    yield put(appActions.fetchFailed({error: "Search failed, try again"}));
+    yield put(appActions.fetchError({error: "Search failed, try again"}));
   }
 }
 
