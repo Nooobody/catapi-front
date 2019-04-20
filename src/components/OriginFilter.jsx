@@ -11,11 +11,12 @@ class OriginFilter extends Component {
     return this.props.breeds
       .map(breed => breed.origin)                           // Map to the origins
       .filter((org, ind, arr) => arr.indexOf(org) === ind)  // Return only uniques
+      .filter((filter) => this.props.filters.indexOf(filter) === -1) // Remove the ones we already have
       .sort()
   }
 
   addFilter(filter) {
-    if (filter === "") {
+    if (filter === "clear") {
       this.props.clearFilters();
     }
     else {
@@ -32,13 +33,16 @@ class OriginFilter extends Component {
       <div className="select is-fullwidth">
         <select
           name="origin"
-          value={this.props.filter}
+          value=""
           onChange={(e) => this.addFilter(e.target.value)}
-          >
+        >
+          <option value="" hidden>Filter by Origin</option>
           {
-            this.props.filters.length > 0 ?
-              <option value="">Clear Filters</option> :
-              <option value="" hidden>Filter by Origin</option>
+            this.props.filters.length > 0
+              ?
+                <option value="clear">Clear Filters</option>
+              :
+                null
           }
           {this.mapOrigins().map(this.renderOption)}
         </select>
