@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { debounce } from 'debounce';
-import { actions as breedActions } from '../redux/components/breed';
+import { actions as searchActions } from '../redux/components/search';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class SearchBar extends Component {
 
@@ -37,7 +39,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div className="control has-icons-right">
+      <div className="control has-icons-left">
         <input
           type="text"
           className="input"
@@ -46,18 +48,21 @@ class SearchBar extends Component {
           onChange={() => {}}
           placeholder="Search by Name"
           />
+        <div className="icon is-left">
+          <FontAwesomeIcon icon="search"></FontAwesomeIcon>
+        </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  search: state.breed.search
+  search: state.search.search
 });
 
 const mapDispatchToProps = {
-  searchByName: breedActions.searchBreedsByName,
-  clearSearch: breedActions.clearSearch
+  searchByName: searchActions.searchBreedsByName,
+  clearSearch: searchActions.clearSearch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar)

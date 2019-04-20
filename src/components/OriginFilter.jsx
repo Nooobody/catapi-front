@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { actions as breedActions } from '../redux/components/breed';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 class OriginFilter extends Component {
   mapOrigins() {
     return this.props.breeds
@@ -37,8 +39,11 @@ class OriginFilter extends Component {
 
   render() {
     return (
-      <div className="control">
+      <div className="control has-icons-left">
         {this.renderSelect()}
+        <div className="icon is-left">
+          <FontAwesomeIcon icon="globe"></FontAwesomeIcon>
+        </div>
       </div>
     )
   }

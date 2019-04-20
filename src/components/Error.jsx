@@ -20,7 +20,7 @@ class Error extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.breed.error
+  error: state.app.error
 });
 
 export default connect(mapStateToProps)(Error);

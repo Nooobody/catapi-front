@@ -8,10 +8,6 @@ import Breed from './Breed';
 
 class BreedList extends Component {
 
-  componentDidMount() {
-    this.props.fetchBreeds();
-  }
-
   filterBreeds(breeds) {
     if (this.props.filter) {
       return breeds.slice().filter(breed => breed.origin.indexOf(this.props.filter) > -1);
@@ -37,9 +33,9 @@ class BreedList extends Component {
     return (
       <div className="columns is-multiline is-centered is-mobile">
         {
-          breeds.length ? 
+          breeds.length ?
             breeds.map(this.renderBreed) :
-            <div>No breeds found!</div>
+            <div className="title">No breeds found!</div>
         }
       </div>
     )
@@ -48,8 +44,8 @@ class BreedList extends Component {
 
 const mapStateToProps = state => ({
   breeds: state.breed.breeds,
-  searchResults: state.breed.searchResults,
-  search: state.breed.search,
+  searchResults: state.search.searchResults,
+  search: state.search.search,
   filter: state.breed.filter
 })
 

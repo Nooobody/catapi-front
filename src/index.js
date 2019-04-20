@@ -6,6 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import configureStore from './redux';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSearch, faTimes, faGlobe } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faSearch);
+library.add(faTimes);
+library.add(faGlobe);
+
 ReactDOM.render(
   <Provider store={configureStore()}>
     <App />
