@@ -1,33 +1,60 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import API from '../api';
-import { API_URL } from '../config';
+import { actions as breedActions } from '../redux/components/breed';
 
 import Breed from './Breed';
 
-export default class BreedList extends Component {
+class BreedList extends Component {
 
-  state = {
-    breeds: []
+  componentDidMount() {
+    this.props.fetchBreeds();
   }
 
-  async componentDidMount() {
-    this.API = new API(API_URL);
-    const breeds = await this.API.getAllBreeds();
-    this.setState({
-      breeds
-    });
+  filterBreeds(breeds) {
+    if (this.props.filter) {
+      return breeds.slice().filter(breed => breed.origin.indexOf(this.props.filter) > -1);
+    }
+    else {
+      return breeds;
+    }
+  }
+
+  renderBreed(breed, index) {
+    return (
+      <Breed key={index} breed={breed} />
+    )
   }
 
   render() {
-    let breeds = this.state.breeds;
+    let breeds = this.props.breeds;
+    if (this.props.search) {
+      breeds = this.props.searchResults;
+    }
+
+    breeds = this.filterBreeds(breeds);
     return (
       <div className="columns is-multiline is-centered is-mobile">
         {
-          breeds.map((breed, index) => <Breed key={index} breed={breed} />)
+          breeds.length ? 
+            breeds.map(this.renderBreed) :
+            <div>No breeds found!</div>
         }
       </div>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  breeds: state.breed.breeds,
+  searchResults: state.breed.searchResults,
+  search: state.breed.search,
+  filter: state.breed.filter
+})
+
+const mapDispatchToProps = {
+  fetchBreeds: breedActions.fetchAllBreeds
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BreedList)
