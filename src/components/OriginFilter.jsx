@@ -14,6 +14,15 @@ class OriginFilter extends Component {
       .sort()
   }
 
+  addFilter(filter) {
+    if (filter === "") {
+      this.props.clearFilters();
+    }
+    else {
+      this.props.addFilter({filter});
+    }
+  }
+
   renderOption(origin, index) {
     return <option value={origin} key={index}>{origin}</option>
   }
@@ -24,11 +33,11 @@ class OriginFilter extends Component {
         <select
           name="origin"
           value={this.props.filter}
-          onChange={(e) => this.props.setFilter({filter: e.target.value})}
+          onChange={(e) => this.addFilter(e.target.value)}
           >
           {
-            this.props.filter ?
-              <option value="">Clear Filter</option> :
+            this.props.filters.length > 0 ?
+              <option value="">Clear Filters</option> :
               <option value="" hidden>Filter by Origin</option>
           }
           {this.mapOrigins().map(this.renderOption)}
@@ -50,12 +59,13 @@ class OriginFilter extends Component {
 }
 
 const mapStateToProps = state => ({
-  filter: state.breed.filter,
+  filters: state.breed.filters,
   breeds: state.breed.breeds
 })
 
 const mapDispatchToProps = {
-  setFilter: breedActions.filterBreedsByOrigin
+  addFilter: breedActions.addFilter,
+  clearFilters: breedActions.clearFilters
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OriginFilter);

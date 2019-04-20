@@ -9,8 +9,14 @@ import Breed from './Breed';
 class BreedList extends Component {
 
   filterBreeds(breeds) {
-    if (this.props.filter) {
-      return breeds.slice().filter(breed => breed.origin.indexOf(this.props.filter) > -1);
+    if (this.props.filters.length) {
+      let b = [];
+
+      for (let filter of this.props.filters) {
+        b = b.concat(breeds.filter(breed => breed.origin.indexOf(filter) > -1));
+      }
+
+      return b;
     }
     else {
       return breeds;
@@ -46,7 +52,7 @@ const mapStateToProps = state => ({
   breeds: state.breed.breeds,
   searchResults: state.search.searchResults,
   search: state.search.search,
-  filter: state.breed.filter
+  filters: state.breed.filters
 })
 
 const mapDispatchToProps = {

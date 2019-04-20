@@ -8,6 +8,8 @@ $title-color: white;
 @import "../node_modules/bulma/sass/elements/form";
 @import "../node_modules/bulma/sass/elements/notification";
 @import "../node_modules/bulma/sass/elements/icon";
+@import "../node_modules/bulma/sass/elements/button";
+@import "../node_modules/bulma/sass/elements/tag";
 
 $primary-color: #990AE3;
 
@@ -20,9 +22,13 @@ $primary-color: #990AE3;
 
 .breed {
   background-color: darken($primary-color, 5%);
-  margin: 10px;
+  margin: 0.5rem;
 }
 
 .breed-content {
-  margin-left: 10px;
+  margin-left: 0.5rem;
+}
+
+.filter-wrapper {
+  margin-top: 1rem;
 }

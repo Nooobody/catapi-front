@@ -12,8 +12,9 @@ export const actions = {
   fetchAllBreeds: createAction("FETCH_ALL_BREEDS"),
   s_fetchAllBreeds: createAction("FETCH_ALL_BREEDS_SUCCESSFUL", breeds => breeds),
 
-  filterBreedsByOrigin: createAction("FILTER_BREEDS_BY_ORIGIN", filter => filter),
-  clearFilter: createAction("CLEAR_FILTER"),
+  addFilter: createAction("ADD_FILTER", filter => filter),
+  removeFilter: createAction("REMOVE_FILTER", filter => filter),
+  clearFilters: createAction("CLEAR_FILTERS"),
 }
 
 // SAGAS
@@ -47,16 +48,16 @@ export const reducers = handleActions({
     breeds: payload.breeds,
     error: ""
   }),
-  [actions.fetchFailed]: (state, { payload }) => ({
+  [actions.addFilter]: (state, { payload }) => ({
     ...state,
-    error: payload.error
+    filters: state.filters.concat([payload.filter])
   }),
-  [actions.filterBreedsByOrigin]: (state, { payload }) => ({
+  [actions.removeFilter]: (state, { payload }) => ({
     ...state,
-    filter: payload.filter
+    filters: state.filters.slice().filter(fil => fil !== payload.filter)
   }),
-  [actions.clearFilter]: (state, { payload }) => ({
+  [actions.clearFilters]: (state, { payload }) => ({
     ...state,
-    filter: ""
+    filters: []
   }),
-}, {breeds: [], filter: "", error: ""});
+}, {breeds: [], filters: [], error: ""});

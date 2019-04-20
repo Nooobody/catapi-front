@@ -33,13 +33,22 @@ class SearchBar extends Component {
       this.props.clearSearch();
     }
     else {
+      this.props.startSearching();
       this.doSearch();
     }
   }
 
+  clearSearch = () => {
+    this.setState({
+      input: ""
+    });
+    this.props.clearSearch();
+  }
+
   render() {
     return (
-      <div className="control has-icons-left">
+    <div className="field has-addons">
+      <div className="control has-icons-left is-expanded">
         <input
           type="text"
           className="input"
@@ -52,17 +61,32 @@ class SearchBar extends Component {
           <FontAwesomeIcon icon="search"></FontAwesomeIcon>
         </div>
       </div>
+      {
+        this.state.input.length > 0 ?
+        <div className="control">
+          {
+            this.props.searching ?
+              <div className="button is-primary is-loading"></div>
+            :
+              <div className="button is-primary" onClick={this.clearSearch}>Clear</div>
+          }
+        </div>
+        : null
+      }
+    </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  search: state.search.search
+  search: state.search.search,
+  searching: state.search.searching
 });
 
 const mapDispatchToProps = {
   searchByName: searchActions.searchBreedsByName,
-  clearSearch: searchActions.clearSearch
+  clearSearch: searchActions.clearSearch,
+  startSearching: searchActions.startSearching
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar)

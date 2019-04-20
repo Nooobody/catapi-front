@@ -6,6 +6,7 @@ import { API_URL } from '../../config';
 import { actions as appActions } from './app';
 
 export const actions = {
+  startSearching: createAction("START_SEARCHING"),
   searchBreedsByName: createAction("SEARCH_BREEDS_BY_NAME", search => search),
   s_searchBreedsByName: createAction("SEARCH_BREEDS_BY_NAME_SUCCESSFUL", searchResults => searchResults),
   clearSearch: createAction("CLEAR_SEARCH")
@@ -32,13 +33,19 @@ export function* sagas() {
 // REDUCERS
 
 export const reducers = handleActions({
+  [actions.startSearching]: (state) => ({
+    ...state,
+    searching: true
+  }),
   [actions.searchBreedsByName]: (state, { payload }) => ({
     ...state,
-    search: payload.search
+    search: payload.search,
+    searching: true
   }),
   [actions.s_searchBreedsByName]: (state, { payload }) => ({
     ...state,
-    searchResults: payload.searchResults
+    searchResults: payload.searchResults,
+    searching: false
   }),
   [actions.clearSearch]: (state, { payload }) => ({
     ...state,
